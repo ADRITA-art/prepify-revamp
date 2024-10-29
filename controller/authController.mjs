@@ -39,3 +39,31 @@ export const signup = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+      const user = await User.findOne({ email });
+      if (!user) {
+          
+          return res.status(404).json({ message: 'Go to register' });
+      }
+
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+          return res.status(401).json({ message: 'Invalid password' });
+      }
+
+      const token = jwt.sign({ email: user.email ,id:user.id },"secret");
+
+      res.status(201).json({
+          success: true,
+          statusCode:201,
+          token: token
+      })
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
