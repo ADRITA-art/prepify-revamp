@@ -19,16 +19,17 @@ export const createArticle = async (req, res) => {
 
     // Generate article content using OpenAI
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: "You are a helpful assistant." },
-        {
-          role: "user",
-          content: `Write an article on the topic: ${topic}`,
-        },
-      ],
-      max_tokens: 500,
+      model: "gpt-4o-mini",
+messages: [
+  { role: "system", content: "You are a helpful assistant specializing in creating articles on technical and study-related topics for college students. You strictly avoid non-academic or unrelated subjects." },
+  {
+    role: "user",
+    content: `Write an article on the topic: ${topic}. Ensure the article is concise, limited to 200 words, and includes relatable examples to help college students understand the concept effectively. If the topic is not technical or study-related, respond with: 'I'm here to assist with technical or academic topics. Please provide a relevant topic for an article.'`
+  },
+]
+
     });
+
 
     const articleContent = completion.choices[0].message.content;
 
