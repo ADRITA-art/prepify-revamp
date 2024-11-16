@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import articleRoutes from "./routes/articleRoutes.mjs";
 import authRoutes from "./routes/authRoutes.mjs";
 import connectDB from './config/database.mjs';
+// import fileRoutes from './routes/fileRoutes.mjs';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import events from 'events';
@@ -23,6 +24,7 @@ app.use (
 )
 app.use('/api/auth', authRoutes);
 app.use('/api/articles', articleRoutes);
+// app.use('/api/file', ocrRoutes);
 
 
 
